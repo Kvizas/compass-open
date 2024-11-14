@@ -1,5 +1,4 @@
 import admin from 'firebase-admin';
-import { getFirestore } from 'firebase-admin/firestore';
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
@@ -13,7 +12,7 @@ export default async function handler(req, res) {
   const { id } = req.query; // Get the document ID from the query parameters
 
   try {
-    const doc = await getFirestore().collection('sharables').doc(id).get();
+    const doc = await admin.firestore().collection('sharables').doc(id).get();
 
     if (!doc.exists) {
       return res.status(404).json({ message: 'Document not found' });
