@@ -5,7 +5,7 @@ export default function Page() {
     <div>
       <Head>
         <meta name="og:title" content="Vercel Edge Network" />
-        <meta name="og:description" content="Memory" />
+        <meta name="og:description" content="Memory 2" />
         <meta
           name="og:image"
           content={
@@ -13,7 +13,9 @@ export default function Page() {
             // `VERCEL_URL` environment variable to get the deployment’s URL.
             // More info:
             // https://vercel.com/docs/concepts/projects/environment-variables
-            `https://compass-open.vercel.app/api/vercel`
+            `${
+              process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : ""
+            }/api/vercel`
           }
         />
       </Head>
