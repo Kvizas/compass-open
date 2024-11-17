@@ -10,7 +10,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.60.2",
     "@vercel/og": "latest",
+    "firebase": "^11.0.2",
     "firebase-admin": "^13.0.0",
     "next": "latest",
     "react": "latest",

@@ -8,14 +8,11 @@ export default function Page() {
         <meta name="og:description" content="Vercel Edge Network" />
         <meta
           name="og:image"
-          content={
-            // Updated to use NEXT_PUBLIC_VERCEL_URL
-            `${
-              process.env.NEXT_PUBLIC_VERCEL_URL
-                ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
-                : ""
-            }/api/vercel`
-          }
+          content={`${
+            process.env.NEXT_PUBLIC_VERCEL_URL
+              ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
+              : ""
+          }/api/vercel`}
         />
       </Head>
       <h1>
