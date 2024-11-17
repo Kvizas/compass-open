@@ -29,7 +29,7 @@ export default function Page() {
               process.env.NEXT_PUBLIC_VERCEL_URL
                 ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
                 : ""
-            }/api/vercel`
+            }/api/memory-preview?sharable=${sharableId}`
           }
         />
       </Head>
