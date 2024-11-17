@@ -42,6 +42,7 @@ export interface Memory {
   insight?: MemoryInsight;
   location?: Location;
   quotes?: Quote[];
+  keywords?: string[];
   startTime: Timestamp;
   title?: string;
   shortSummary?: string;

@@ -2,6 +2,7 @@ import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 import LogoForSharable from "../../../assets/svg/LogoForSharable";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotes";
+import { Memory } from "../../../types/Memory";
 import getVercelUrl from "../../../urls";
 
 export const config = {
@@ -14,6 +15,20 @@ const font = fetch(
     import.meta.url
   )
 ).then((res) => res.arrayBuffer());
+
+// Sorts keywords by length. Longest one in the middle, shortest ones on the outside
+function sortKeywords(keywords: string[]) {
+  const sorted = [...keywords.slice(0, 5)].sort((a, b) => b.length - a.length);
+  const result: string[] = [];
+  const mid = Math.ceil(sorted.length / 2);
+
+  for (let i = 0; i < mid; i++) {
+    if (i < sorted.length) result.push(sorted[i]);
+    if (i + mid < sorted.length) result.unshift(sorted[i + mid]);
+  }
+
+  return result;
+}
 
 export default async function handler(req: NextRequest) {
   const { searchParams } = req.nextUrl;
@@ -32,9 +47,7 @@ export default async function handler(req: NextRequest) {
     `${getVercelUrl()}/api/getSharedEntity?id=${sharableId}`
   );
 
-  const memoryData = await memory.json();
-
-  console.log("memoryData", memoryData);
+  const memoryData = (await memory.json()) as Memory;
 
   let sideMultiplier = Math.random() > 0.5 ? 1 : -1;
 
@@ -50,22 +63,34 @@ export default async function handler(req: NextRequest) {
           height: "100%",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          {memoryData.quotes &&
-            memoryData.quotes.map((quote) => {
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: -3,
+            transform: "scale(0.7)",
+          }}
+        >
+          {memoryData.keywords &&
+            sortKeywords(memoryData.keywords).map((keyword) => {
               const randomRotation = (1 + Math.random() * 4) * sideMultiplier;
+              const randomZIndex = Math.floor(Math.random() * 10);
+              const randomTranslation =
+                Math.floor(Math.random() * 10 + 10) * sideMultiplier;
               sideMultiplier *= -1;
               return (
                 <div
-                  key={quote.text}
+                  key={keyword}
                   style={{
                     borderRadius: 18,
                     background: "#313131",
                     boxShadow: "0px 2px 40px 0px rgba(0, 0, 0, 0.50)",
                     display: "flex",
-                    transform: `rotate(${randomRotation}deg)`,
+                    transform: `rotate(${randomRotation}deg) translateX(${randomTranslation}px)`,
                     padding: "6px 20px 12px 20px",
                     maxWidth: "380px",
+                    zIndex: randomZIndex.toString(),
                   }}
                 >
                   <div
@@ -89,7 +114,7 @@ export default async function handler(req: NextRequest) {
                         marginTop: 12,
                       }}
                     />
-                    Hello this
+                    {keyword}
                   </div>
                 </div>
               );
@@ -116,7 +141,7 @@ export default async function handler(req: NextRequest) {
     ),
     {
       width: 440,
-      height: 440,
+      height: 231,
       fonts: [
         {
           name: "Helvetica Now Display",
