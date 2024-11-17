@@ -1,39 +1,16 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import OpeningQuotes from "../../assets/svg/OpeningQuotes";
-import { useSharable } from "../../hooks/useSharable";
+import { fetchSharable } from "../../hooks/useSharable";
 
-export default function Page() {
+export default function Page({ sharedEntity }) {
   const router = useRouter();
   const { sharableId } = router.query;
 
-  const { sharedEntity } = useSharable(sharableId as string);
+  let sideMultiplier = 1;
 
-  if (!sharedEntity)
-    return (
-      <div>
-        <Head>
-          <meta name="og:title" content={sharedEntity.title} />
-          <meta name="og:description" content={sharedEntity.shortSummary} />
-          <meta
-            name="og:image"
-            content={
-              // Because OG images must have a absolute URL, we use the
-              // `VERCEL_URL` environment variable to get the deployment’s URL.
-              // More info:
-              // https://vercel.com/docs/concepts/projects/environment-variables
-              `${
-                process.env.NEXT_PUBLIC_VERCEL_URL
-                  ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
-                  : ""
-              }/api/memory-preview?sharable=${sharableId}`
-            }
-          />
-        </Head>
-      </div>
-    );
-
-  let sideMultiplier = Math.random() > 0.5 ? 1 : -1;
+  if (!sharedEntity) return <div>Loading...</div>;
 
   return (
     <div>
@@ -42,17 +19,11 @@ export default function Page() {
         <meta name="og:description" content={sharedEntity.shortSummary} />
         <meta
           name="og:image"
-          content={
-            // Because OG images must have a absolute URL, we use the
-            // `VERCEL_URL` environment variable to get the deployment’s URL.
-            // More info:
-            // https://vercel.com/docs/concepts/projects/environment-variables
-            `${
-              process.env.NEXT_PUBLIC_VERCEL_URL
-                ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
-                : ""
-            }/api/memory-preview?sharable=${sharableId}`
-          }
+          content={`${
+            process.env.NEXT_PUBLIC_VERCEL_URL
+              ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
+              : ""
+          }/api/memory-preview?sharable=${sharableId}`}
         />
       </Head>
       <h1>Title: {sharedEntity.title}</h1>
@@ -117,3 +88,15 @@ export default function Page() {
     </div>
   );
 }
+
+// Fetch data on the server side
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { sharableId } = context.query;
+  const sharedEntity = await fetchSharable(sharableId as string); // Fetch data here
+
+  return {
+    props: {
+      sharedEntity, // Pass the fetched data as props
+    },
+  };
+};

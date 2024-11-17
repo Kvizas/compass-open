@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import getVercelUrl from "../urls";
 
 export const useSharable = (sharableId: string) => {
 
@@ -19,11 +20,9 @@ export const useSharable = (sharableId: string) => {
 };
 
 export const fetchSharable = async (sharableId: string) => {
-  const response = await fetch(`/api/getSharedEntity?id=${sharableId}`);
-  const data = await response.json();
+  const response = await fetch(
+    `${getVercelUrl()}/api/getSharedEntity?id=${sharableId}`
+  );
 
-  if (!data)
-    console.error("Sharable not found");
-  else
-    return data;
+  return await response.json();
 };
