@@ -9,7 +9,29 @@ export default function Page() {
 
   const { sharedEntity } = useSharable(sharableId as string);
 
-  if (!sharedEntity) return null;
+  if (!sharedEntity)
+    return (
+      <div>
+        <Head>
+          <meta name="og:title" content={sharedEntity.title} />
+          <meta name="og:description" content={sharedEntity.shortSummary} />
+          <meta
+            name="og:image"
+            content={
+              // Because OG images must have a absolute URL, we use the
+              // `VERCEL_URL` environment variable to get the deployment’s URL.
+              // More info:
+              // https://vercel.com/docs/concepts/projects/environment-variables
+              `${
+                process.env.NEXT_PUBLIC_VERCEL_URL
+                  ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
+                  : ""
+              }/api/memory-preview?sharable=${sharableId}`
+            }
+          />
+        </Head>
+      </div>
+    );
 
   let sideMultiplier = Math.random() > 0.5 ? 1 : -1;
 
