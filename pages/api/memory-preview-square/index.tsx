@@ -139,8 +139,8 @@ export default async function handler(req: NextRequest) {
       </div>
     ),
     {
-      width: 600,
-      height: 315,
+      width: 400,
+      height: 400,
       fonts: [
         {
           name: "Helvetica Now Display",

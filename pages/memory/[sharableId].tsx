@@ -7,6 +7,9 @@ import { fetchSharable } from "../../hooks/useSharable";
 export default function Page({ sharedEntity }) {
   const router = useRouter();
   const { sharableId } = router.query;
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+    ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
+    : "";
 
   let sideMultiplier = 1;
 
@@ -15,15 +18,29 @@ export default function Page({ sharedEntity }) {
   return (
     <div>
       <Head>
-        <meta name="og:title" content={sharedEntity.title} />
-        <meta name="og:description" content={sharedEntity.shortSummary} />
+        <meta property="og:title" content={sharedEntity.title} />
+        <meta property="og:description" content={sharedEntity.shortSummary} />
+
         <meta
-          name="og:image"
-          content={`${
-            process.env.NEXT_PUBLIC_VERCEL_URL
-              ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
-              : ""
-          }/api/memory-preview?sharable=${sharableId}`}
+          property="og:image"
+          content={`${baseUrl}/api/memory-preview?sharable=${sharableId}`}
+        />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="315" />
+
+        <meta
+          property="og:image"
+          content={`${baseUrl}/api/memory-preview-square?sharable=${sharableId}`}
+        />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={sharedEntity.title} />
+        <meta name="twitter:description" content={sharedEntity.shortSummary} />
+        <meta
+          name="twitter:image"
+          content={`${baseUrl}/api/memory-preview?sharable=${sharableId}`}
         />
       </Head>
       <h1>Title: {sharedEntity.title}</h1>
