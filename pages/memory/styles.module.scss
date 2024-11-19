@@ -1,0 +1,24 @@
+.background2 {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #000 57.61%, #060600 66.16%, #0B0B00 71.9%, #535900 99.64%);      mix-blend-mode: lighten;
+  pointer-events: none;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  opacity: 0.5;
+  background: linear-gradient(180deg, #000 0%, #FD0 100%);
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}
+
+.body {
+  color: #fff;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+}

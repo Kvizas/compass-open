@@ -1,6 +1,6 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
-import OpeningQuotes from "../../../assets/svg/OpeningQuotes";
+import OpeningQuotes from "../../../assets/svg/OpeningQuotesIcon10px";
 import { Memory } from "../../../types/Memory";
 import getVercelUrl from "../../../urls";
 
@@ -80,7 +80,6 @@ export default async function handler(req: NextRequest) {
           {sortedKeywords ? (
             sortedKeywords.map((keyword) => {
               const randomRotation = (2 + Math.random() * 4) * sideMultiplier;
-              const randomZIndex = Math.floor(Math.random() * 10);
               const randomTranslation =
                 Math.floor(Math.random() * 40 + 10) * sideMultiplier;
               sideMultiplier *= -1;

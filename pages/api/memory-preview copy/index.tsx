@@ -69,6 +69,7 @@ export default async function handler(req: NextRequest) {
             flexDirection: "column",
             alignItems: "center",
             gap: -3,
+            transform: "scale(0.7)",
           }}
         >
           {memoryData.keywords &&
@@ -139,8 +140,8 @@ export default async function handler(req: NextRequest) {
       </div>
     ),
     {
-      width: 400,
-      height: 400,
+      width: 440,
+      height: 231,
       fonts: [
         {
           name: "Helvetica Now Display",

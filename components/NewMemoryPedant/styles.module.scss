@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.text {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: -0.2px;
+  text-align: center;
+  line-height: 100%;
+  opacity: 0;
+  animation: fadeIn 0.6s ease-out forwards 0.2s;
+}
+
+.pedant {
+  animation: swingIn 0.3s ease-out forwards, fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes swingIn {
+  0% {
+    transform: rotate(80deg) scale(0.2);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}

@@ -1,0 +1,23 @@
+@use "/styles/sections.module.scss" as *;
+
+.sharedMemoryContentSection {
+  @extend .sectionPadding;
+  flex-grow: 1;
+  width: 100%;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .75rem;
+}
+
+.column {
+  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 900px) {
+  .sharedMemoryContentSection {
+    grid-template-columns: 1fr;
+  }
+}
