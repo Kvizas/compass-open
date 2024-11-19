@@ -1,6 +1,5 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
-import LogoForSharable from "../../../assets/svg/LogoForSharable";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotes";
 import { Memory } from "../../../types/Memory";
 import getVercelUrl from "../../../urls";
@@ -18,16 +17,18 @@ const font = fetch(
 
 // Sorts keywords by length. Longest one in the middle, shortest ones on the outside
 function sortKeywords(keywords: string[]) {
-  const sorted = [...keywords.slice(0, 5)].sort((a, b) => b.length - a.length);
-  const result: string[] = [];
-  const mid = Math.ceil(sorted.length / 2);
+  const filtered = keywords
+    .filter((word) => word.length <= 35)
+    .sort((a, b) => b.length - a.length)
+    .slice(0, 4);
 
-  for (let i = 0; i < mid; i++) {
-    if (i < sorted.length) result.push(sorted[i]);
-    if (i + mid < sorted.length) result.unshift(sorted[i + mid]);
+  while (filtered.length < 4) {
+    filtered.push(undefined);
   }
 
-  return result;
+  return [filtered[2], filtered[0], filtered[1], filtered[3]].filter(
+    (word) => word !== undefined
+  );
 }
 
 export default async function handler(req: NextRequest) {
@@ -51,6 +52,9 @@ export default async function handler(req: NextRequest) {
 
   let sideMultiplier = Math.random() > 0.5 ? 1 : -1;
 
+  const sortedKeywords =
+    memoryData.keywords && sortKeywords(memoryData.keywords);
+
   return new ImageResponse(
     (
       <div
@@ -66,36 +70,40 @@ export default async function handler(req: NextRequest) {
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
+            flexDirection: "column-reverse",
+            padding: "0 48px",
             gap: -3,
+            transform: `scale(${1.3 - (sortedKeywords?.length || 0) * 0.07})`,
           }}
         >
-          {memoryData.keywords &&
-            sortKeywords(memoryData.keywords).map((keyword) => {
-              const randomRotation = (1 + Math.random() * 4) * sideMultiplier;
+          {sortedKeywords ? (
+            sortedKeywords.map((keyword) => {
+              const randomRotation = (2 + Math.random() * 4) * sideMultiplier;
               const randomZIndex = Math.floor(Math.random() * 10);
               const randomTranslation =
-                Math.floor(Math.random() * 10 + 10) * sideMultiplier;
+                Math.floor(Math.random() * 40 + 10) * sideMultiplier;
               sideMultiplier *= -1;
               return (
                 <div
                   key={keyword}
                   style={{
                     borderRadius: 18,
-                    background: "#313131",
-                    boxShadow: "0px 2px 40px 0px rgba(0, 0, 0, 0.50)",
+                    background: "#FFF",
+                    // boxShadow: "0px 2px 40px 0px rgba(0, 0, 0, 0.50)",
+                    boxShadow:
+                      "0px 0px 22.2px 0px rgba(255, 255, 255, 0.41), 0px 20px 20px 0px rgba(0, 0, 0, 0.18)",
                     display: "flex",
                     transform: `rotate(${randomRotation}deg) translateX(${randomTranslation}px)`,
                     padding: "6px 20px 12px 20px",
                     maxWidth: "380px",
-                    zIndex: randomZIndex.toString(),
+                    zIndex: 20,
                   }}
                 >
                   <div
                     style={{
-                      opacity: 0.3,
-                      color: "#FFF",
+                      opacity: 0.6,
+                      color: "#000",
                       fontSize: 24,
                       fontFamily: "Helvetica Now Display",
                       fontStyle: "normal",
@@ -111,13 +119,29 @@ export default async function handler(req: NextRequest) {
                       style={{
                         transform: `scale(1.1)`,
                         marginTop: 12,
+                        opacity: 0.9,
                       }}
                     />
                     {keyword}
                   </div>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <div
+              style={{
+                color: "#FFF",
+                fontSize: 24,
+                fontFamily: "Helvetica Now Display",
+                fontStyle: "normal",
+                fontWeight: 510,
+                textAlign: "center",
+                padding: "48px",
+              }}
+            >
+              {memoryData.title || "Shared memory"}
+            </div>
+          )}
         </div>
         <div
           style={{
@@ -134,7 +158,7 @@ export default async function handler(req: NextRequest) {
             src={`${getVercelUrl()}/images/FieldyGlowing.png`}
             alt="Fieldy Device Icon"
           />
-          <LogoForSharable />
+          {/* <LogoForSharable /> */}
         </div>
       </div>
     ),

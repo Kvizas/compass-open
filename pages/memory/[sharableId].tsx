@@ -27,13 +27,7 @@ export default function Page({ sharedEntity }) {
         />
         <meta property="og:image:width" content="600" />
         <meta property="og:image:height" content="315" />
-
-        <meta
-          property="og:image"
-          content={`${baseUrl}/api/memory-preview-square?sharable=${sharableId}`}
-        />
-        <meta property="og:image:width" content="400" />
-        <meta property="og:image:height" content="400" />
+        <meta property="og:image:type" content="image/png" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={sharedEntity.title} />
