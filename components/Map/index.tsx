@@ -1,3 +1,11 @@
+declare global {
+  interface Window {
+    mapkit: any;
+  }
+}
+
+const mapkit = window.mapkit;
+
 import { GeoPoint } from "firebase/firestore";
 import Head from "next/head";
 import { useEffect, useRef } from "react";
@@ -9,7 +17,7 @@ interface MapProps {
 
 const Map = ({ address, coordinates }: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<mapkit.Map | null>(null);
+  const mapInstanceRef = useRef(null);
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
