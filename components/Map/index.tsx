@@ -4,8 +4,6 @@ declare global {
   }
 }
 
-const mapkit = window.mapkit;
-
 import { GeoPoint } from "firebase/firestore";
 import Head from "next/head";
 import { useEffect, useRef } from "react";
@@ -21,6 +19,8 @@ const Map = ({ address, coordinates }: MapProps) => {
 
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
+
+    const mapkit = window.mapkit;
 
     mapkit.init({
       authorizationCallback: (done) => {
