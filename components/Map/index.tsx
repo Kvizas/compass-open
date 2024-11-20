@@ -1,6 +1,6 @@
 import { GeoPoint } from "firebase/firestore";
-import { Map as MapKit, Marker } from "mapkit-react";
-import { isIOS } from "react-device-detect";
+import Head from "next/head";
+import { useEffect, useRef } from "react";
 
 interface MapProps {
   address: string;
@@ -8,42 +8,71 @@ interface MapProps {
 }
 
 const Map = ({ address, coordinates }: MapProps) => {
-  const handleMapClick = () => {
-    if (isIOS) {
-      // Open Apple Maps
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<mapkit.Map | null>(null);
+
+  useEffect(() => {
+    if (!mapRef.current || mapInstanceRef.current) return;
+
+    mapkit.init({
+      authorizationCallback: (done) => {
+        done(
+          "eyJraWQiOiI0R1VDMjRBSFQzIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJSQjhaNDg5M1pVIiwiaWF0IjoxNzMyMTIyMjI1LCJvcmlnaW4iOiIqLmNvbXBhc3N3ZWFyYWJsZS5jb20ifQ.9ROMK16i2u9xdWre48SHbMd545rZxAnokbZ62D0kXVXjLTjS__nSFeXiNm53YdSlGSNAGTDYh5hklPsjQnjK4A"
+        );
+      },
+    });
+
+    const map = new mapkit.Map(mapRef.current, {
+      showsZoomControl: true,
+      center: new mapkit.Coordinate(
+        coordinates.latitude,
+        coordinates.longitude
+      ),
+      zoom: 12,
+    });
+
+    // Add marker
+    new mapkit.MarkerAnnotation(
+      new mapkit.Coordinate(coordinates.latitude, coordinates.longitude),
+      { title: address }
+    ).map = map;
+
+    // Add click handler to open Apple Maps
+    map.element.addEventListener("click", () => {
       window.open(
-        `maps://maps.apple.com/?q=${encodeURIComponent(address)}`,
+        `http://maps.apple.com/?q=${encodeURIComponent(address)}&ll=${
+          coordinates.latitude
+        },${coordinates.longitude}`,
         "_blank"
       );
-    } else {
-      // Open Google Maps
-      window.open(
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-          address
-        )}`,
-        "_blank"
-      );
-    }
-  };
+    });
+
+    mapInstanceRef.current = map;
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.destroy();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, [coordinates, address]);
 
   return (
-    <div
-      onClick={handleMapClick}
-      style={{
-        borderRadius: "24px",
-        overflow: "hidden",
-        height: "200px",
-        cursor: "pointer",
-      }}
-    >
-      <MapKit token="eyJraWQiOiI0R1VDMjRBSFQzIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJSQjhaNDg5M1pVIiwiaWF0IjoxNzMyMTIyMjI1LCJvcmlnaW4iOiIqLmNvbXBhc3N3ZWFyYWJsZS5jb20ifQ.9ROMK16i2u9xdWre48SHbMd545rZxAnokbZ62D0kXVXjLTjS__nSFeXiNm53YdSlGSNAGTDYh5hklPsjQnjK4A">
-        <Marker
-          latitude={coordinates.latitude}
-          longitude={coordinates.longitude}
-          title={address}
-        />
-      </MapKit>
-    </div>
+    <>
+      <Head>
+        <script src="https://cdn.apple-mapkit.com/mk/5.45.0/mapkit.js"></script>
+      </Head>
+      <div
+        style={{
+          borderRadius: "24px",
+          overflow: "hidden",
+          height: "200px",
+          cursor: "pointer",
+        }}
+      >
+        <div ref={mapRef} style={{ height: "100%", width: "100%" }} />
+      </div>
+    </>
   );
 };
 
