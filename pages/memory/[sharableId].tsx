@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 import { GetServerSideProps } from "next";
 import { fetchSharable } from "../../hooks/useSharable";
@@ -15,6 +16,18 @@ export default function Page({ sharedEntity }) {
   const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
     ? "https://" + process.env.NEXT_PUBLIC_VERCEL_URL
     : "";
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    const timer = setTimeout(() => {
+      document.body.style.overflow = "unset";
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   if (!sharedEntity) return <div>Loading...</div>;
 
