@@ -2,7 +2,7 @@ import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotesIcon10px";
 import { Memory } from "../../../types/Memory";
-import getVercelUrl from "../../../urls";
+import getVercelUrl from "../../../utils/urls";
 
 export const config = {
   runtime: "edge",

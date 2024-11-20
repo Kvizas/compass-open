@@ -5,6 +5,7 @@ interface CardTitleProps {
   children: React.ReactNode;
   icon?: React.ReactNode;
   style?: React.CSSProperties;
+  titleStyle?: React.CSSProperties;
 }
 
 const CardTitle: React.FC<CardTitleProps> = ({ children, icon, style }) => {

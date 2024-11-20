@@ -8,6 +8,25 @@ if (!admin.apps.length) {
   });
 }
 
+
+const convertTimestamps = (obj) => {
+  if (!obj || typeof obj !== 'object') return obj;
+  
+  if (obj instanceof admin.firestore.Timestamp) {
+    return obj.toDate();
+  }
+  
+  if (Array.isArray(obj)) {
+    return obj.map(item => convertTimestamps(item));
+  }
+  
+  return Object.keys(obj).reduce((result, key) => {
+    result[key] = convertTimestamps(obj[key]);
+    return result;
+  }, {});
+};
+
+
 export default async function handler(req, res) {
   const { id } = req.query; // Get the document ID from the query parameters
 
@@ -32,7 +51,7 @@ export default async function handler(req, res) {
 
     sharable.sharedFields.forEach(field => {
       if (entityData.hasOwnProperty(field)) {
-        filteredResponse[field] = entityData[field];
+        filteredResponse[field] = convertTimestamps(entityData[field]);
       }
     });
 

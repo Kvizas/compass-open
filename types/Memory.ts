@@ -1,4 +1,4 @@
-import { DocumentData, DocumentReference, GeoPoint, Timestamp } from "firebase/firestore";
+import { DocumentData, DocumentReference, GeoPoint } from "firebase/firestore";
 
 interface SentimentAnalysis {
   excitement: number;
@@ -27,7 +27,7 @@ interface Quote {
 export interface Transcription {
   duration?: number;
   speaker?: string;
-  created: Timestamp;
+  created: string;
   text: string;
 }
 
@@ -38,17 +38,17 @@ export interface Memory {
   liked?: boolean;
   processStage: ProcessStage;
   actionItems?: DocumentReference<DocumentData>[];
-  endTime?: Timestamp;
+  endTime?: string;
   insight?: MemoryInsight;
   location?: Location;
   quotes?: Quote[];
   keywords?: string[];
-  startTime: Timestamp;
+  startTime: string;
   title?: string;
   shortSummary?: string;
   longSummary?: string;
   transcriptions?: Transcription[];
-  updatedAt: Timestamp;
+  upstringdAt: string;
   userId: string;
   ref: DocumentReference<DocumentData>;
 }

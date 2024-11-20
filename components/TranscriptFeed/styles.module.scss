@@ -1,0 +1,14 @@
+.transcriptFeed {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dateSeparator {
+    font-size: 14px;
+    font-style: normal;
+    opacity: 0.5;
+    letter-spacing: -0.14px;
+    
+    margin-left: 40px;
+}

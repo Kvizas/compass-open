@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import getVercelUrl from "../urls";
+import getVercelUrl from "../utils/urls";
 
 export const useSharable = (sharableId: string) => {
 

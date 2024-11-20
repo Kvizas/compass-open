@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import LogoForSharable from "../../../assets/svg/LogoForSharable";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotesIcon10px";
 import { Memory } from "../../../types/Memory";
-import getVercelUrl from "../../../urls";
+import getVercelUrl from "../../../utils/urls";
 
 export const config = {
   runtime: "edge",

@@ -5,7 +5,8 @@ import TranscriptIcon15px from "../../../assets/svg/TranscriptIcon15px";
 import Card from "../../../components/Card";
 import CardText from "../../../components/Card/CardText";
 import CardTitle from "../../../components/Card/CardTitle";
-import TranscriptLine from "../../../components/TranscriptLine";
+import CollapsibleCard from "../../../components/Card/CollapsibleCard";
+import TranscriptFeed from "../../../components/TranscriptFeed";
 import { Memory } from "../../../types/Memory";
 import styles from "./styles.module.scss";
 
@@ -28,13 +29,6 @@ const SharedMemoryContentSection: React.FC<SharedMemoryContentSectionProps> = ({
       </div>
 
       <div className={styles.column}>
-        {memory.insight && (
-          <Card>
-            <CardTitle>Insight</CardTitle>
-            <CardText>{memory.insight?.context}</CardText>
-          </Card>
-        )}
-
         {memory.quotes && (
           <Card>
             <CardTitle icon={<ThoughtIcon15px fill="#fff" />}>Quotes</CardTitle>
@@ -51,18 +45,24 @@ const SharedMemoryContentSection: React.FC<SharedMemoryContentSectionProps> = ({
         )}
 
         {memory.transcriptions && (
-          <Card>
-            <CardTitle icon={<TranscriptIcon15px fill="#fff" />}>
-              Transcript
-            </CardTitle>
-            {memory.transcriptions.map((transcription) => (
-              <TranscriptLine text={transcription.text} />
-            ))}
-          </Card>
+          <CollapsibleCard
+            title="Transcript"
+            titleIcon={<TranscriptIcon15px fill="#fff" />}
+            defaultExpanded={false}
+          >
+            <TranscriptFeed transcriptions={memory.transcriptions} />
+          </CollapsibleCard>
         )}
       </div>
 
       <div className={styles.column}>
+        {memory.insight && (
+          <Card>
+            <CardTitle>Insight</CardTitle>
+            <CardText>{memory.insight?.context}</CardText>
+          </Card>
+        )}
+
         {memory.location && (
           <iframe
             style={{
@@ -70,7 +70,6 @@ const SharedMemoryContentSection: React.FC<SharedMemoryContentSectionProps> = ({
               outline: "none",
               border: "none",
             }}
-            width="318"
             height="200"
             loading="lazy"
             allowFullScreen

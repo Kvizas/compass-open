@@ -1,17 +1,16 @@
 .transcriptLine {
     display: flex;
     gap: 16px;
+    margin-bottom: 17px;
 }
 
 .transcriptLineText {
-    flex: 1;
-    color: #FFF;
-    font-family: "Helvetica Now Display";
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
-    line-height: 110%;
-    letter-spacing: -0.16px;
+    line-height: 120%;
+    letter-spacing: -0.4px;
+    flex: 1;
 }
 
 .transcriptLineAvatar {

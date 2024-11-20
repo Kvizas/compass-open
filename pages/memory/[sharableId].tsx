@@ -4,7 +4,9 @@ import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import { fetchSharable } from "../../hooks/useSharable";
 import PedantSection from "../../sections/memory-sections/PedantSection";
+import PromoSection from "../../sections/memory-sections/PromoSection";
 import SharedMemoryContentSection from "../../sections/memory-sections/SharedMemoryContentSection";
+import SharedMemoryHeaderSection from "../../sections/memory-sections/SharedMemoryHeaderSection";
 import styles from "./styles.module.scss";
 
 export default function Page({ sharedEntity }) {
@@ -39,13 +41,17 @@ export default function Page({ sharedEntity }) {
         />
       </Head>
 
-      <div className={styles.background2} />
-      <div className={styles.background} />
+      {/* <div className={styles.background2} />
+      <div className={styles.background} /> */}
 
       <div className={styles.body}>
         <PedantSection />
 
+        <SharedMemoryHeaderSection memory={sharedEntity} />
+
         <SharedMemoryContentSection memory={sharedEntity} />
+
+        <PromoSection />
       </div>
     </>
   );
