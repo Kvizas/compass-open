@@ -32,9 +32,7 @@ const Map = ({ address, coordinates }: MapProps) => {
     try {
       mapkit.init({
         authorizationCallback: (done) => {
-          done(
-            "eyJraWQiOiJGWDdBTUpMMk5aIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJSQjhaNDg5M1pVIiwiaWF0IjoxNzMyMTMwNzQ0LCJvcmlnaW4iOiIqLmNvbXBhc3N3ZWFyYWJsZS5jb20ifQ.P4VEnZSEn71ukdoMcIeXAbcvTrNyC-AlTge2gF4q_69hM856X1hHmPOy0Vrx56Kh8is9dDsCAdJnTjMmteI8rQ"
-          );
+          done(process.env.NEXT_PUBLIC_MAPKIT_TOKEN);
         },
       });
 
