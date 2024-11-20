@@ -18,13 +18,27 @@ const CollapsibleCard: React.FC<CollapsibleCardProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
+  const handleClick = () => {
+    if (!isExpanded) {
+      setIsExpanded(true);
+    }
+  };
+
   return (
-    <div className={styles.collapsibleCard}>
+    <div
+      className={`${styles.collapsibleCard} ${
+        isExpanded ? "" : styles.clickable
+      }`}
+      onClick={handleClick}
+    >
       <div
         className={`${styles.headerWrapper} ${
           isExpanded ? styles.expanded : ""
         }`}
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsExpanded(!isExpanded);
+        }}
       >
         <CardTitle icon={titleIcon}>
           {title}

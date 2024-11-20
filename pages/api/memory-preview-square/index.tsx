@@ -1,6 +1,5 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
-import LogoForSharable from "../../../assets/svg/LogoForSharable";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotesIcon10px";
 import { Memory } from "../../../types/Memory";
 import getVercelUrl from "../../../utils/urls";
@@ -134,7 +133,6 @@ export default async function handler(req: NextRequest) {
             src={`${getVercelUrl()}/images/FieldyGlowing.png`}
             alt="Fieldy Device Icon"
           />
-          <LogoForSharable />
         </div>
       </div>
     ),

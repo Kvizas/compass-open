@@ -17,67 +17,80 @@ interface SharedMemoryContentSectionProps {
 const SharedMemoryContentSection: React.FC<SharedMemoryContentSectionProps> = ({
   memory,
 }) => {
+  // Check if each column has any content
+  const hasLeftColumn = memory.longSummary;
+  const hasMiddleColumn = memory.quotes || memory.transcriptions;
+  const hasRightColumn = memory.insight || memory.location;
+
   return (
     <div className={styles.sharedMemoryContentSection}>
-      <div className={styles.column}>
-        <Card>
-          <CardTitle icon={<StarIcon15px pathProps={{ fill: "#fff" }} />}>
-            Summary
-          </CardTitle>
-          <CardText>{memory.longSummary}</CardText>
-        </Card>
-      </div>
-
-      <div className={styles.column}>
-        {memory.quotes && (
+      {hasLeftColumn && (
+        <div className={styles.column}>
           <Card>
-            <CardTitle icon={<ThoughtIcon15px fill="#fff" />}>Quotes</CardTitle>
-            {memory.quotes.map((quote, index) => (
-              <div key={index} style={{ display: "flex", gap: 3 }}>
-                <OpeningQuotes
-                  style={{ marginTop: 5 }}
-                  pathProps={{ fill: "#fff" }}
-                />
-                <CardText>{quote.text}</CardText>
-              </div>
-            ))}
+            <CardTitle icon={<StarIcon15px pathProps={{ fill: "#fff" }} />}>
+              Summary
+            </CardTitle>
+            <CardText>{memory.longSummary}</CardText>
           </Card>
-        )}
+        </div>
+      )}
 
-        {memory.transcriptions && (
-          <CollapsibleCard
-            title="Transcript"
-            titleIcon={<TranscriptIcon15px fill="#fff" />}
-            defaultExpanded={false}
-          >
-            <TranscriptFeed transcriptions={memory.transcriptions} />
-          </CollapsibleCard>
-        )}
-      </div>
+      {hasMiddleColumn && (
+        <div className={styles.column}>
+          {memory.quotes && (
+            <Card>
+              <CardTitle icon={<ThoughtIcon15px fill="#fff" />}>
+                Quotes
+              </CardTitle>
+              {memory.quotes.map((quote, index) => (
+                <div key={index} style={{ display: "flex", gap: 3 }}>
+                  <OpeningQuotes
+                    style={{ marginTop: 5 }}
+                    pathProps={{ fill: "#fff" }}
+                  />
+                  <CardText>{quote.text}</CardText>
+                </div>
+              ))}
+            </Card>
+          )}
 
-      <div className={styles.column}>
-        {memory.insight && (
-          <Card>
-            <CardTitle>Insight</CardTitle>
-            <CardText>{memory.insight?.context}</CardText>
-          </Card>
-        )}
+          {memory.transcriptions && (
+            <CollapsibleCard
+              title="Transcript"
+              titleIcon={<TranscriptIcon15px fill="#fff" />}
+              defaultExpanded={false}
+            >
+              <TranscriptFeed transcriptions={memory.transcriptions} />
+            </CollapsibleCard>
+          )}
+        </div>
+      )}
 
-        {memory.location && (
-          <iframe
-            style={{
-              borderRadius: "24px",
-              outline: "none",
-              border: "none",
-            }}
-            height="200"
-            loading="lazy"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBBJaRc9ltRzIJFEG2MuboTAbqYNe6jLns&q=${memory.location.address}`}
-          ></iframe>
-        )}
-      </div>
+      {hasRightColumn && (
+        <div className={styles.column}>
+          {memory.insight && (
+            <Card>
+              <CardTitle>Insight</CardTitle>
+              <CardText>{memory.insight?.context}</CardText>
+            </Card>
+          )}
+
+          {memory.location && (
+            <iframe
+              style={{
+                borderRadius: "24px",
+                outline: "none",
+                border: "none",
+              }}
+              height="200"
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBBJaRc9ltRzIJFEG2MuboTAbqYNe6jLns&q=${memory.location.address}`}
+            ></iframe>
+          )}
+        </div>
+      )}
       {/* <h1 style={{ margin: 0, color: "#fff" }}>Title: {memory.title}</h1>
       <p>Short Summary: {memory.shortSummary}</p>
       <p>Quotes: {memory.quotes?.map((quote) => quote.text).join(", ")}</p> */}

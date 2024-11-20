@@ -157,7 +157,6 @@ export default async function handler(req: NextRequest) {
             src={`${getVercelUrl()}/images/FieldyGlowing.png`}
             alt="Fieldy Device Icon"
           />
-          {/* <LogoForSharable /> */}
         </div>
       </div>
     ),
