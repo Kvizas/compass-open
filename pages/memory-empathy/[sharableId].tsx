@@ -54,6 +54,9 @@ export default function Page({ sharedEntity }) {
         />
       </Head>
 
+      <div className={styles.background2} />
+      <div className={styles.background} />
+
       <div className={styles.body}>
         <PedantSection />
 
