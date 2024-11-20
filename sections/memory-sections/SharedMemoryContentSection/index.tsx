@@ -6,6 +6,7 @@ import Card from "../../../components/Card";
 import CardText from "../../../components/Card/CardText";
 import CardTitle from "../../../components/Card/CardTitle";
 import CollapsibleCard from "../../../components/Card/CollapsibleCard";
+import Map from "../../../components/Map";
 import TranscriptFeed from "../../../components/TranscriptFeed";
 import { Memory } from "../../../types/Memory";
 import styles from "./styles.module.scss";
@@ -76,18 +77,10 @@ const SharedMemoryContentSection: React.FC<SharedMemoryContentSectionProps> = ({
           )}
 
           {memory.location && (
-            <iframe
-              style={{
-                borderRadius: "24px",
-                outline: "none",
-                border: "none",
-              }}
-              height="200"
-              loading="lazy"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBBJaRc9ltRzIJFEG2MuboTAbqYNe6jLns&q=${memory.location.address}`}
-            ></iframe>
+            <Map
+              address={memory.location.address}
+              coordinates={memory.location.coordinates}
+            />
           )}
         </div>
       )}

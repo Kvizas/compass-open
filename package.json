@@ -17,6 +17,7 @@
     "mapkit-react": "^1.15.2",
     "next": "latest",
     "react": "latest",
+    "react-device-detect": "^2.2.3",
     "react-dom": "latest",
     "sass": "^1.81.0"
   },
