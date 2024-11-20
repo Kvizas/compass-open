@@ -33,7 +33,7 @@ const Map = ({ address, coordinates }: MapProps) => {
       mapkit.init({
         authorizationCallback: (done) => {
           done(
-            "eyJraWQiOiI4OENZS0czVDc5IiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJSQjhaNDg5M1pVIiwiaWF0IjoxNzMyMTI4MTM3LCJleHAiOjE3MzI3ODA3OTl9.qegR70NuWQxtiMYpkQbhzrIkGsbXWQa56nJgz5cOVlJoHAatC8z-_-3BzBG0FmAS0rJ-qpFfpXCtJvA12NnkBw"
+            "eyJraWQiOiJGWDdBTUpMMk5aIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJSQjhaNDg5M1pVIiwiaWF0IjoxNzMyMTMwNzQ0LCJvcmlnaW4iOiIqLmNvbXBhc3N3ZWFyYWJsZS5jb20ifQ.P4VEnZSEn71ukdoMcIeXAbcvTrNyC-AlTge2gF4q_69hM856X1hHmPOy0Vrx56Kh8is9dDsCAdJnTjMmteI8rQ"
           );
         },
       });

@@ -1,4 +1,4 @@
-import { DocumentData, DocumentReference, GeoPoint } from "firebase/firestore";
+import { DocumentData, DocumentReference } from "firebase/firestore";
 
 interface SentimentAnalysis {
   excitement: number;
@@ -14,7 +14,7 @@ export interface MemoryInsight {
 
 interface Location {
   address: string;
-  coordinates: GeoPoint;
+  coordinates: { _latitude: number; _longitude: number };
   country: string;
   placeId: string;
   zip: string;
