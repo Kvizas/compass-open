@@ -4,58 +4,93 @@ declare global {
   }
 }
 
-import { GeoPoint } from "firebase/firestore";
-import Head from "next/head";
-import { useEffect, useRef } from "react";
+import Script from "next/script";
+import { useEffect, useRef, useState } from "react";
+import { isIOS, isMobile } from "react-device-detect";
 
 interface MapProps {
   address: string;
-  coordinates: GeoPoint;
+  coordinates: { _latitude: number; _longitude: number };
 }
 
 const Map = ({ address, coordinates }: MapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef(null);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
   useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
+    if (!mapRef.current || mapInstanceRef.current || !scriptLoaded) return;
+
+    // Add error handling for mapkit initialization
+    if (!window.mapkit) {
+      console.error("MapKit JS not loaded");
+      return;
+    }
 
     const mapkit = window.mapkit;
 
-    mapkit.init({
-      authorizationCallback: (done) => {
-        done(
-          "eyJraWQiOiJSWDU2UllVODZXIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJSQjhaNDg5M1pVIiwiaWF0IjoxNzMyMTI3NDY1LCJvcmlnaW4iOiIqLnZlcmNlbC5hcHAifQ.djHjCfeNlJ9a5RYF3t2yAa4vjeIzckwz_kP7RQ6pE2Y87vMA8mj5kmsn5TIq4x-qgXGKegrjxg7I5dvY2hoJmA"
-        );
-      },
-    });
+    try {
+      mapkit.init({
+        authorizationCallback: (done) => {
+          done(
+            "eyJraWQiOiI4OENZS0czVDc5IiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJSQjhaNDg5M1pVIiwiaWF0IjoxNzMyMTI4MTM3LCJleHAiOjE3MzI3ODA3OTl9.qegR70NuWQxtiMYpkQbhzrIkGsbXWQa56nJgz5cOVlJoHAatC8z-_-3BzBG0FmAS0rJ-qpFfpXCtJvA12NnkBw"
+          );
+        },
+      });
 
-    const map = new mapkit.Map(mapRef.current, {
-      showsZoomControl: true,
-      center: new mapkit.Coordinate(
-        coordinates.latitude,
-        coordinates.longitude
-      ),
-      zoom: 12,
-    });
+      const map = new mapkit.Map(mapRef.current, {
+        showsZoomControl: true,
+        center: new mapkit.Coordinate(
+          coordinates._latitude,
+          coordinates._longitude
+        ),
+        cameraDistance: 1500,
+        showsMapTypeControl: true,
+        isScrollEnabled: false,
+        isZoomEnabled: false,
+      });
 
-    // Add marker
-    new mapkit.MarkerAnnotation(
-      new mapkit.Coordinate(coordinates.latitude, coordinates.longitude),
-      { title: address }
-    ).map = map;
+      // Add console log to verify map initialization
+      console.log("Map initialized:", map);
 
-    // Add click handler to open Apple Maps
-    map.element.addEventListener("click", () => {
-      window.open(
-        `http://maps.apple.com/?q=${encodeURIComponent(address)}&ll=${
-          coordinates.latitude
-        },${coordinates.longitude}`,
-        "_blank"
+      // Fix marker addition
+      const marker = new mapkit.MarkerAnnotation(
+        new mapkit.Coordinate(coordinates._latitude, coordinates._longitude),
+        { title: address || "Location" }
       );
-    });
+      map.addAnnotation(marker);
 
-    mapInstanceRef.current = map;
+      // Update click handler with device-specific logic
+      map.element.addEventListener("click", () => {
+        const latitude = coordinates._latitude;
+        const longitude = coordinates._longitude;
+        const encodedAddress = encodeURIComponent(address);
+
+        if (isIOS) {
+          // Open Apple Maps on iOS devices
+          window.open(
+            `http://maps.apple.com/?q=${encodedAddress}&ll=${latitude},${longitude}`,
+            "_blank"
+          );
+        } else if (isMobile) {
+          // Open Google Maps app on Android devices
+          window.open(
+            `google.navigation:q=${encodedAddress}@${latitude},${longitude}`,
+            "_blank"
+          );
+        } else {
+          // Open Google Maps in browser for desktop
+          window.open(
+            `https://www.google.com/maps/search/?api=1&query=${encodedAddress}&query_place_id=${latitude},${longitude}`,
+            "_blank"
+          );
+        }
+      });
+
+      mapInstanceRef.current = map;
+    } catch (error) {
+      console.error("Error initializing map:", error);
+    }
 
     return () => {
       if (mapInstanceRef.current) {
@@ -63,19 +98,28 @@ const Map = ({ address, coordinates }: MapProps) => {
         mapInstanceRef.current = null;
       }
     };
-  }, [coordinates, address]);
+  }, [coordinates, address, scriptLoaded]);
 
   return (
     <>
-      <Head>
-        <script src="https://cdn.apple-mapkit.com/mk/5.45.0/mapkit.js"></script>
-      </Head>
+      <Script
+        src="https://cdn.apple-mapkit.com/mk/5.45.0/mapkit.js"
+        onLoad={() => {
+          console.log("MapKit JS loaded");
+          setScriptLoaded(true);
+        }}
+        onError={(e) => {
+          console.error("Error loading MapKit JS:", e);
+        }}
+        strategy="afterInteractive"
+      />
       <div
         style={{
           borderRadius: "24px",
           overflow: "hidden",
           height: "200px",
           cursor: "pointer",
+          backgroundColor: "#f0f0f0",
         }}
       >
         <div ref={mapRef} style={{ height: "100%", width: "100%" }} />
