@@ -18,6 +18,9 @@ export default function Page({ sharedEntity }) {
     : "";
 
   useEffect(() => {
+    // Scroll to top on component mount
+    window.scrollTo(0, 0);
+
     document.body.style.overflow = "hidden";
     const timer = setTimeout(() => {
       document.body.style.overflow = "unset";

@@ -24,9 +24,7 @@ const Map = ({ address, coordinates }: MapProps) => {
 
     mapkit.init({
       authorizationCallback: (done) => {
-        done(
-          "eyJraWQiOiI0R1VDMjRBSFQzIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJSQjhaNDg5M1pVIiwiaWF0IjoxNzMyMTIyMjI1LCJvcmlnaW4iOiIqLmNvbXBhc3N3ZWFyYWJsZS5jb20ifQ.9ROMK16i2u9xdWre48SHbMd545rZxAnokbZ62D0kXVXjLTjS__nSFeXiNm53YdSlGSNAGTDYh5hklPsjQnjK4A"
-        );
+        done(process.env.MAPKIT_TOKEN);
       },
     });
 
