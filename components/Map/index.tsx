@@ -46,6 +46,7 @@ const Map = ({ address, coordinates }: MapProps) => {
         showsMapTypeControl: true,
         isScrollEnabled: false,
         isZoomEnabled: false,
+        colorScheme: "dark",
       });
 
       // Add console log to verify map initialization
