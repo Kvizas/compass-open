@@ -1,14 +1,15 @@
 .background2 {
   position: fixed;
   inset: 0;
-  bottom: -15vh !important;
-  background: linear-gradient(180deg, #000 57.61%, #060600 66.16%, #0B0B00 71.9%, #535900 99.64%);      mix-blend-mode: lighten;
+  background: linear-gradient(180deg, #000 57.61%, #060600 66.16%, #0B0B00 71.9%, #535900 99.64%);
+  mix-blend-mode: lighten;
   pointer-events: none;
 }
 
 .background {
   position: fixed;
   inset: 0;
+  bottom: -53vh !important;
   opacity: 0.5;
   background: linear-gradient(180deg, #000 0%, rgb(255, 221, 0) 100%);
   mix-blend-mode: lighten;

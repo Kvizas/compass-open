@@ -2,11 +2,13 @@
 
 .sharedMemoryContentSection {
   @extend .sectionPadding;
+  max-width: 318px;
+  box-sizing: content-box;
   flex-grow: 1;
   width: 100%;
   overflow-y: auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: .75rem;
 
   margin-bottom: 10vh;

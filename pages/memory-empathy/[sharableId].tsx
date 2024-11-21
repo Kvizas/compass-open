@@ -18,6 +18,8 @@ export default function Page({ sharedEntity }) {
     : "";
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     document.body.style.overflow = "hidden";
     const timer = setTimeout(() => {
       document.body.style.overflow = "unset";
@@ -54,8 +56,8 @@ export default function Page({ sharedEntity }) {
         />
       </Head>
 
-      <div className={styles.background2} />
-      <div className={styles.background} />
+      <div className={styles.background2}></div>
+      <div className={styles.background}></div>
 
       <div className={styles.body}>
         <PedantSection />
