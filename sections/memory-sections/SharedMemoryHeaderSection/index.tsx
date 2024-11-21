@@ -12,7 +12,7 @@ const SharedMemoryContentSection: React.FC<SharedMemoryContentSectionProps> = ({
   return (
     <div className={styles.sharedMemoryHeaderSection}>
       <div className={styles.date}>
-        {toPovilasTimeFormat(new Date(memory.startTime))}
+        {memory.startTime && toPovilasTimeFormat(new Date(memory.startTime))}
       </div>
       <div className={styles.title}>{memory.title}</div>
     </div>
