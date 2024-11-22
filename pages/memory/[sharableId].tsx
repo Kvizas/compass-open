@@ -3,14 +3,19 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import { GetServerSideProps } from "next";
-import { fetchSharable } from "../../hooks/useSharable";
+import { fetchSharable, Sharable } from "../../hooks/useSharable";
 import PedantSection from "../../sections/memory-sections/PedantSection";
 import PromoSection from "../../sections/memory-sections/PromoSection";
 import SharedMemoryContentSection from "../../sections/memory-sections/SharedMemoryContentSection";
 import SharedMemoryHeaderSection from "../../sections/memory-sections/SharedMemoryHeaderSection";
+import { Memory } from "../../types/Memory";
 import styles from "./styles.module.scss";
 
-export default function Page({ sharedEntity }) {
+interface PageProps {
+  sharedEntity: Sharable<Memory>;
+}
+
+export default function Page({ sharedEntity }: PageProps) {
   const router = useRouter();
   const { sharableId } = router.query;
   const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
@@ -36,8 +41,14 @@ export default function Page({ sharedEntity }) {
   return (
     <>
       <Head>
-        <meta property="og:title" content={sharedEntity.title} />
-        <meta property="og:description" content={sharedEntity.shortSummary} />
+        <meta
+          property="og:title"
+          content={sharedEntity.target.title || "Shared memory"}
+        />
+        <meta
+          property="og:description"
+          content={sharedEntity.target.shortSummary}
+        />
 
         <meta
           property="og:image"
@@ -48,8 +59,14 @@ export default function Page({ sharedEntity }) {
         <meta property="og:image:type" content="image/png" />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={sharedEntity.title} />
-        <meta name="twitter:description" content={sharedEntity.shortSummary} />
+        <meta
+          name="twitter:title"
+          content={sharedEntity.target.title || "Shared memory"}
+        />
+        <meta
+          name="twitter:description"
+          content={sharedEntity.target.shortSummary}
+        />
         <meta
           name="twitter:image"
           content={`${baseUrl}/api/memory-preview?sharable=${sharableId}`}
@@ -57,11 +74,11 @@ export default function Page({ sharedEntity }) {
       </Head>
 
       <div className={styles.body}>
-        <PedantSection />
+        <PedantSection authorName={sharedEntity.authorName} />
 
-        <SharedMemoryHeaderSection memory={sharedEntity} />
+        <SharedMemoryHeaderSection memory={sharedEntity.target} />
 
-        <SharedMemoryContentSection memory={sharedEntity} />
+        <SharedMemoryContentSection memory={sharedEntity.target} />
 
         <PromoSection />
       </div>
@@ -72,7 +89,7 @@ export default function Page({ sharedEntity }) {
 // Fetch data on the server side
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { sharableId } = context.query;
-  const sharedEntity = await fetchSharable(sharableId as string); // Fetch data here
+  const sharedEntity = await fetchSharable<Memory>(sharableId as string); // Fetch data here
 
   return {
     props: {

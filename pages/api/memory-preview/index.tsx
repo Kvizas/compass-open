@@ -1,6 +1,7 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotesIcon10px";
+import { Sharable } from "../../../hooks/useSharable";
 import { Memory } from "../../../types/Memory";
 import getVercelUrl from "../../../utils/urls";
 
@@ -48,12 +49,12 @@ export default async function handler(req: NextRequest) {
     `${getVercelUrl()}/api/getSharedEntity?id=${sharableId}`
   );
 
-  const memoryData = (await memory.json()) as Memory;
+  const memoryData = (await memory.json()) as Sharable<Memory>;
 
   let sideMultiplier = Math.random() > 0.5 ? 1 : -1;
 
   const sortedKeywords =
-    memoryData.keywords && sortKeywords(memoryData.keywords);
+    memoryData.target.keywords && sortKeywords(memoryData.target.keywords);
 
   return new ImageResponse(
     (
@@ -138,7 +139,7 @@ export default async function handler(req: NextRequest) {
                 padding: "48px",
               }}
             >
-              {memoryData.title || "Shared memory"}
+              {memoryData.target.title || "Shared memory"}
             </div>
           )}
         </div>

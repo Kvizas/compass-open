@@ -2,7 +2,11 @@ import Image from "next/image";
 import GlowingFieldy from "../../assets/images/GlowingFieldy.webp";
 import styles from "./styles.module.scss";
 
-const NewMemoryPedant = () => {
+interface NewMemoryPedantProps {
+  authorName: string;
+}
+
+const NewMemoryPedant: React.FC<NewMemoryPedantProps> = ({ authorName }) => {
   return (
     <div className={styles.container}>
       <Image
@@ -15,7 +19,7 @@ const NewMemoryPedant = () => {
       <div className={styles.text}>
         You've got a Memory
         <br />
-        from Simon
+        from {authorName}
       </div>
     </div>
   );

@@ -2,13 +2,13 @@
 
 .sharedMemoryContentSection {
   @extend .sectionPadding;
-  max-width: 318px;
+  max-width: 330px;
   box-sizing: content-box;
   flex-grow: 1;
   width: 100%;
   overflow-y: auto;
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: 1fr;
   gap: .75rem;
 
   margin-bottom: 10vh;
@@ -20,8 +20,9 @@
   flex-direction: column;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 450px) {
   .sharedMemoryContentSection {
-    grid-template-columns: 1fr;
+    max-width: 100vw;
+    box-sizing: border-box;
   }
 }

@@ -43,7 +43,7 @@ const CollapsibleCard: React.FC<CollapsibleCardProps> = ({
         <CardTitle icon={titleIcon}>
           {title}
           <span className={styles.arrow}>
-            <CollapsibleArrowIcon15px />
+            <CollapsibleArrowIcon15px style={{ transform: "rotate(180deg)" }} />
           </span>
         </CardTitle>
       </div>

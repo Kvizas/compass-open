@@ -1,6 +1,7 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotesIcon10px";
+import { Sharable } from "../../../hooks/useSharable";
 import { Memory } from "../../../types/Memory";
 import getVercelUrl from "../../../utils/urls";
 
@@ -46,7 +47,7 @@ export default async function handler(req: NextRequest) {
     `${getVercelUrl()}/api/getSharedEntity?id=${sharableId}`
   );
 
-  const memoryData = (await memory.json()) as Memory;
+  const memoryData = (await memory.json()) as Sharable<Memory>;
 
   let sideMultiplier = Math.random() > 0.5 ? 1 : -1;
 
@@ -70,8 +71,8 @@ export default async function handler(req: NextRequest) {
             gap: -3,
           }}
         >
-          {memoryData.keywords &&
-            sortKeywords(memoryData.keywords).map((keyword) => {
+          {memoryData.target.keywords &&
+            sortKeywords(memoryData.target.keywords).map((keyword) => {
               const randomRotation = (1 + Math.random() * 4) * sideMultiplier;
               const randomZIndex = Math.floor(Math.random() * 10);
               const randomTranslation =

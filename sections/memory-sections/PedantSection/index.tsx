@@ -1,10 +1,14 @@
 import NewMemoryPedant from "../../../components/NewMemoryPedant";
 import styles from "./styles.module.scss";
 
-const PedantSection = () => {
+interface PedantSectionProps {
+  authorName: string;
+}
+
+const PedantSection: React.FC<PedantSectionProps> = ({ authorName }) => {
   return (
     <div className={styles.pedantSection}>
-      <NewMemoryPedant />
+      <NewMemoryPedant authorName={authorName} />
     </div>
   );
 };
