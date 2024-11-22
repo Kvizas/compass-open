@@ -114,7 +114,8 @@ const Map = ({ address, coordinates }: MapProps) => {
       />
       <div
         style={{
-          borderRadius: "24px",
+          borderRadius: 24,
+          outline: "1px solid rgba(255, 255, 255, 0.2)",
           overflow: "hidden",
           height: "200px",
           cursor: "pointer",
