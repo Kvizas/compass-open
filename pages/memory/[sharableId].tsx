@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 import { GetServerSideProps } from "next";
+import EmpathyBackground from "../../components/EmpathyBackground";
 import { fetchSharable, Sharable } from "../../hooks/useSharable";
 import PedantSection from "../../sections/memory-sections/PedantSection";
 import PromoSection from "../../sections/memory-sections/PromoSection";
@@ -72,6 +73,13 @@ export default function Page({ sharedEntity }: PageProps) {
           content={`${baseUrl}/api/memory-preview?sharable=${sharableId}`}
         />
       </Head>
+
+      <EmpathyBackground
+        sentimentAnalysis={
+          sharedEntity.target.sentiment ||
+          sharedEntity.target?.insight?.sentiment
+        }
+      />
 
       <div className={styles.body}>
         <PedantSection authorName={sharedEntity.authorName} />

@@ -11,7 +11,9 @@ const PromoSection = () => {
       </div>
       <Button
         href="https://compasswearable.com/"
-        icon={<CompassIcon13px fill="#fff" />}
+        icon={
+          <CompassIcon13px fill="#fff" style={{ transform: "scale(1.2)" }} />
+        }
       >
         Learn more
       </Button>

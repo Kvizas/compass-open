@@ -49,9 +49,6 @@ const Map = ({ address, coordinates }: MapProps) => {
         colorScheme: "dark",
       });
 
-      // Add console log to verify map initialization
-      console.log("Map initialized:", map);
-
       // Fix marker addition
       const marker = new mapkit.MarkerAnnotation(
         new mapkit.Coordinate(coordinates._latitude, coordinates._longitude),
@@ -115,7 +112,7 @@ const Map = ({ address, coordinates }: MapProps) => {
       <div
         style={{
           borderRadius: 24,
-          outline: "1px solid rgba(255, 255, 255, 0.2)",
+          outline: "#324256 solid 1px",
           overflow: "hidden",
           height: "200px",
           cursor: "pointer",

@@ -14,6 +14,7 @@
     "@vercel/og": "latest",
     "firebase": "^11.0.2",
     "firebase-admin": "^13.0.0",
+    "framer-motion": "^11.11.17",
     "mapkit-react": "^1.15.2",
     "next": "latest",
     "react": "latest",

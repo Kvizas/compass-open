@@ -2,18 +2,7 @@
 
 .pedantSection {
   @extend .sectionPadding;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: pedantSectionHeightChange 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.25) forwards 2.1s;
-}
-
-@keyframes pedantSectionHeightChange {
-  0% {
-    height: 100vh;
-  }
-  100% {
-    height: max(45vh, 300px);
-  }
 }

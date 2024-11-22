@@ -1,6 +1,6 @@
 import { DocumentData, DocumentReference } from "firebase/firestore";
 
-interface SentimentAnalysis {
+export interface SentimentAnalysis {
   excitement: number;
   happiness: number;
   anger: number;
@@ -9,7 +9,7 @@ interface SentimentAnalysis {
 
 export interface MemoryInsight {
   context: string;
-  sentimentAnalysis: SentimentAnalysis;
+  sentiment: SentimentAnalysis;
 }
 
 interface Location {
@@ -40,6 +40,7 @@ export interface Memory {
   actionItems?: DocumentReference<DocumentData>[];
   endTime?: string;
   insight?: MemoryInsight;
+  sentiment?: SentimentAnalysis;
   location?: Location;
   quotes?: Quote[];
   keywords?: string[];

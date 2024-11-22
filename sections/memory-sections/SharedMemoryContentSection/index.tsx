@@ -1,8 +1,8 @@
 import FieldyIcon18px from "../../../assets/svg/FieldyIcon18px";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotesIcon10px";
+import QuotesIcon15px from "../../../assets/svg/QuotesIcon15px";
 import StarIcon15px from "../../../assets/svg/StarIcon15px";
-import ThoughtIcon15px from "../../../assets/svg/ThoughtIcon15px";
-import TranscriptIcon15px from "../../../assets/svg/TranscriptIcon15px";
+import TranscriptIcon17px from "../../../assets/svg/TranscriptIcon17px";
 import Card from "../../../components/Card";
 import CardText from "../../../components/Card/CardText";
 import CardTitle from "../../../components/Card/CardTitle";
@@ -46,7 +46,7 @@ const SharedMemoryContentSection: React.FC<SharedMemoryContentSectionProps> = ({
 
       {memory.quotes && (
         <Card>
-          <CardTitle icon={<ThoughtIcon15px fill="#fff" />}>Quotes</CardTitle>
+          <CardTitle icon={<QuotesIcon15px fill="#fff" />}>Quotes</CardTitle>
           {memory.quotes.map((quote, index) => (
             <div key={index} style={{ display: "flex", gap: 3 }}>
               <OpeningQuotes
@@ -62,7 +62,7 @@ const SharedMemoryContentSection: React.FC<SharedMemoryContentSectionProps> = ({
       {memory.transcriptions && (
         <CollapsibleCard
           title="Transcript"
-          titleIcon={<TranscriptIcon15px fill="#fff" />}
+          titleIcon={<TranscriptIcon17px fill="#fff" />}
           defaultExpanded={false}
         >
           <TranscriptFeed transcriptions={memory.transcriptions} />

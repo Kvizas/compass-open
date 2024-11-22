@@ -1,0 +1,57 @@
+.background {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.backgroundRed {
+    @extend .background;
+
+    opacity: 0.4;
+    background: linear-gradient(180deg, #000 0%, #FF0004 100%);
+
+    &Highlight {
+        @extend .background;
+        opacity: 0.3;
+        background: linear-gradient(180deg, #000 0%, #980060 100%);
+    }
+}
+
+.backgroundYellow {
+    @extend .background;
+    
+    opacity: 0.5;
+    background: linear-gradient(180deg, #000 0%, #535900 100%);
+
+    &Highlight {
+        @extend .background;
+        opacity: 0.3;
+        background: linear-gradient(180deg, #000 0%, #FD0 100%);
+    }
+}
+
+.backgroundGreen {
+    @extend .background;
+    
+    opacity: 0.3;
+    background: linear-gradient(180deg, #000 0%, #69992D 100%);
+
+    &Highlight {
+        @extend .background;
+        opacity: 0.3;
+        background: linear-gradient(180deg, #000 0%, #00FF00 100%);
+    }
+}
+
+.backgroundPurple {
+    @extend .background;
+    
+    opacity: 0.5;
+    background: linear-gradient(180deg, #000 0%, #593A95 100%);
+
+    &Highlight {
+        @extend .background;
+        opacity: 0.3;
+        background: linear-gradient(180deg, #000 0%, #873B9C 100%);
+    }
+}
