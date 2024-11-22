@@ -1,15 +1,71 @@
+import React from "react";
 import { SentimentAnalysis } from "../../types/Memory";
-import styles from "./styles.module.scss";
+
+const baseStyle = (position: "fixed" | "absolute"): React.CSSProperties => ({
+  position,
+  inset: 0,
+  pointerEvents: "none",
+});
+
+const sentimentStyles = (position: "fixed" | "absolute") => ({
+  red: {
+    base: {
+      ...baseStyle(position),
+      background: "linear-gradient(180deg, #000 0%, #FF0004 100%)",
+    },
+    highlight: {
+      ...baseStyle(position),
+      background: "linear-gradient(180deg, #000 0%, #980060 100%)",
+    },
+  },
+  yellow: {
+    base: {
+      ...baseStyle(position),
+      background: "linear-gradient(180deg, #000 0%, #535900 100%)",
+    },
+    highlight: {
+      ...baseStyle(position),
+      background: "linear-gradient(180deg, #000 0%, #FD0 100%)",
+    },
+  },
+  green: {
+    base: {
+      ...baseStyle(position),
+      background: "linear-gradient(180deg, #000 0%, #69992D 100%)",
+    },
+    highlight: {
+      ...baseStyle(position),
+      background: "linear-gradient(180deg, #000 0%, #00FF00 100%)",
+    },
+  },
+  purple: {
+    base: {
+      ...baseStyle(position),
+      background: "linear-gradient(180deg, #000 0%, #593A95 100%)",
+    },
+    highlight: {
+      ...baseStyle(position),
+      background: "linear-gradient(180deg, #000 0%, #873B9C 100%)",
+    },
+  },
+});
 
 interface EmpathyBackgroundProps {
   sentimentAnalysis?: SentimentAnalysis;
+  position?: "fixed" | "absolute";
+  style?: React.CSSProperties;
 }
 
-const EmpathyBackground = ({ sentimentAnalysis }: EmpathyBackgroundProps) => {
+const EmpathyBackground = ({
+  sentimentAnalysis,
+  position = "fixed",
+  style,
+}: EmpathyBackgroundProps) => {
   if (!sentimentAnalysis) {
     return null;
   }
 
+  const styles = sentimentStyles(position);
   const { excitement, happiness, anger, confidence } = sentimentAnalysis;
   const allValuesSum = excitement + happiness + anger + confidence;
 
@@ -17,33 +73,33 @@ const EmpathyBackground = ({ sentimentAnalysis }: EmpathyBackgroundProps) => {
     {
       type: "anger",
       percentage: anger / allValuesSum,
-      baseClassName: styles.backgroundRed,
+      baseStyle: styles.red.base,
       baseOpacity: 0.4,
-      highlightClassName: styles.backgroundRedHighlight,
+      highlightStyle: styles.red.highlight,
       highlightOpacity: 0.3,
     },
     {
       type: "excitement",
       percentage: excitement / allValuesSum,
-      baseClassName: styles.backgroundYellow,
+      baseStyle: styles.yellow.base,
       baseOpacity: 0.5,
-      highlightClassName: styles.backgroundYellowHighlight,
+      highlightStyle: styles.yellow.highlight,
       highlightOpacity: 0.3,
     },
     {
       type: "happiness",
       percentage: happiness / allValuesSum,
-      baseClassName: styles.backgroundGreen,
+      baseStyle: styles.green.base,
       baseOpacity: 0.5,
-      highlightClassName: styles.backgroundGreenHighlight,
+      highlightStyle: styles.green.highlight,
       highlightOpacity: 0.3,
     },
     {
       type: "confidence",
       percentage: confidence / allValuesSum,
-      baseClassName: styles.backgroundPurple,
+      baseStyle: styles.purple.base,
       baseOpacity: 0.5,
-      highlightClassName: styles.backgroundPurpleHighlight,
+      highlightStyle: styles.purple.highlight,
       highlightOpacity: 0.3,
     },
   ];
@@ -55,22 +111,22 @@ const EmpathyBackground = ({ sentimentAnalysis }: EmpathyBackgroundProps) => {
   return (
     <>
       {dominantSentiments.map((sentiment) => (
-        <>
+        <React.Fragment key={sentiment.type}>
           <div
-            key={sentiment.type}
-            className={sentiment.baseClassName}
             style={{
-              opacity: sentiment.baseOpacity * sentiment.percentage * 0.6,
+              ...sentiment.baseStyle,
+              opacity: sentiment.baseOpacity * sentiment.percentage * 0,
+              ...style,
             }}
           />
           <div
-            key={sentiment.type}
-            className={sentiment.highlightClassName}
             style={{
+              ...sentiment.highlightStyle,
               opacity: sentiment.highlightOpacity * sentiment.percentage * 0.6,
+              ...style,
             }}
           />
-        </>
+        </React.Fragment>
       ))}
     </>
   );

@@ -1,6 +1,7 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 import OpeningQuotes from "../../../assets/svg/OpeningQuotesIcon10px";
+import EmpathyBackground from "../../../components/EmpathyBackground";
 import { Sharable } from "../../../hooks/useSharable";
 import { Memory } from "../../../types/Memory";
 import getVercelUrl from "../../../utils/urls";
@@ -66,8 +67,21 @@ export default async function handler(req: NextRequest) {
           alignItems: "center",
           width: "100%",
           height: "100%",
+          position: "relative",
         }}
       >
+        <EmpathyBackground
+          position="absolute"
+          sentimentAnalysis={
+            memoryData.target.sentiment || memoryData.target.insight?.sentiment
+          }
+          style={{
+            width: "100vw",
+            height: "100vh",
+            marginTop: "-50vh",
+          }}
+        />
+
         <div
           style={{
             display: "flex",
