@@ -76,9 +76,10 @@ export default async function handler(req: NextRequest) {
             memoryData.target.sentiment || memoryData.target.insight?.sentiment
           }
           style={{
-            width: "100vw",
+            width: "200vw",
             height: "100vh",
             marginTop: "-50vh",
+            left: "-50vw",
           }}
         />
 
