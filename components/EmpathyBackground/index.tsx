@@ -115,7 +115,7 @@ const EmpathyBackground = ({
           <div
             style={{
               ...sentiment.baseStyle,
-              opacity: sentiment.baseOpacity * sentiment.percentage * 0,
+              opacity: sentiment.baseOpacity * sentiment.percentage * 0.6,
               ...style,
             }}
           />
