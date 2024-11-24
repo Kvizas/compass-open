@@ -18,17 +18,20 @@ const convertTimestamps = (obj, seen = new WeakSet()) => {
     return obj.toDate();
   }
   
+  // Handle Firestore DocumentReference
+  if (obj instanceof admin.firestore.DocumentReference) {
+    return {
+      path: obj.path,
+      id: obj.id
+    };
+  }
+  
   if (Array.isArray(obj)) {
     return obj.map(item => convertTimestamps(item, seen));
   }
   
   return Object.keys(obj).reduce((result, key) => {
-    // Skip converting the actual Firestore reference
-    if (obj[key] && typeof obj[key].get === 'function') {
-      result[key] = obj[key];
-    } else {
-      result[key] = convertTimestamps(obj[key], seen);
-    }
+    result[key] = convertTimestamps(obj[key], seen);
     return result;
   }, {});
 };

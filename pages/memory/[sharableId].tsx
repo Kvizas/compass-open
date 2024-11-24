@@ -51,7 +51,7 @@ export default function Page({ sharedEntity }: PageProps) {
         />
         <meta
           property="og:description"
-          content={sharedEntity.target?.shortSummary}
+          content={sharedEntity.target?.longSummary || "Check out this memory!"}
         />
 
         <meta
@@ -69,9 +69,7 @@ export default function Page({ sharedEntity }: PageProps) {
         />
         <meta
           name="twitter:description"
-          content={
-            sharedEntity.target?.shortSummary || "Check out this memory!"
-          }
+          content={sharedEntity.target?.longSummary || "Check out this memory!"}
         />
         <meta
           name="twitter:image"
