@@ -53,12 +53,14 @@ const sentimentStyles = (position: "fixed" | "absolute") => ({
 interface EmpathyBackgroundProps {
   sentimentAnalysis?: SentimentAnalysis;
   position?: "fixed" | "absolute";
+  opacityModifier?: number;
   style?: React.CSSProperties;
 }
 
 const EmpathyBackground = ({
   sentimentAnalysis,
   position = "fixed",
+  opacityModifier = 1,
   style,
 }: EmpathyBackgroundProps) => {
   if (!sentimentAnalysis) {
@@ -119,7 +121,8 @@ const EmpathyBackground = ({
                 sentiment.baseOpacity *
                 sentiment.percentage *
                 0.6 *
-                (index === 0 ? 1.5 : 1),
+                (index === 0 ? 1.5 : 1) *
+                opacityModifier,
               ...style,
             }}
           />
@@ -130,7 +133,8 @@ const EmpathyBackground = ({
                 sentiment.highlightOpacity *
                 sentiment.percentage *
                 0.6 *
-                (index === 0 ? 1.5 : 1),
+                (index === 0 ? 1.5 : 1) *
+                opacityModifier,
               ...style,
             }}
           />

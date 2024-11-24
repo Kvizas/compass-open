@@ -81,6 +81,7 @@ export default async function handler(req: NextRequest) {
             marginTop: "-50vh",
             left: "-50vw",
           }}
+          opacityModifier={1.3}
         />
 
         <div
