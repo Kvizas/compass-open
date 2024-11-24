@@ -111,7 +111,7 @@ export default async function handler(req: NextRequest) {
                       "0px 0px 22.2px 0px rgba(255, 255, 255, 0.41), 0px 20px 20px 0px rgba(0, 0, 0, 0.18)",
                     display: "flex",
                     transform: `rotate(${randomRotation}deg) translateX(${randomTranslation}px)`,
-                    padding: "6px 20px 12px 20px",
+                    padding: "8px 24px 14px 24px",
                     maxWidth: "380px",
                     zIndex: 20,
                   }}

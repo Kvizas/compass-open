@@ -44,10 +44,10 @@ export default function Page({ sharedEntity }: PageProps) {
       <Head>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="googlebot" content="noindex, nofollow" />
-        <title>{sharedEntity.target.title || "Shared memory"}</title>
+        <title>{sharedEntity.target?.title || "Shared memory"}</title>
         <meta
           property="og:title"
-          content={sharedEntity.target.title || "Shared memory"}
+          content={sharedEntity.target?.title || "Shared memory"}
         />
         <meta
           property="og:description"
@@ -65,7 +65,7 @@ export default function Page({ sharedEntity }: PageProps) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content={sharedEntity.target.title || "Shared memory"}
+          content={sharedEntity.target?.title || "Shared memory"}
         />
         <meta
           name="twitter:description"
@@ -79,7 +79,7 @@ export default function Page({ sharedEntity }: PageProps) {
 
       <EmpathyBackground
         sentimentAnalysis={
-          sharedEntity.target.sentiment ||
+          sharedEntity.target?.sentiment ||
           sharedEntity.target?.insight?.sentiment
         }
       />
