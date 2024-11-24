@@ -42,6 +42,9 @@ export default function Page({ sharedEntity }: PageProps) {
   return (
     <>
       <Head>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="googlebot" content="noindex, nofollow" />
+        <title>{sharedEntity.target.title || "Shared memory"}</title>
         <meta
           property="og:title"
           content={sharedEntity.target.title || "Shared memory"}
