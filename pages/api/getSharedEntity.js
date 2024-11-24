@@ -48,7 +48,6 @@ export default async function handler(req, res) {
     }
 
     const sharable = sharableRef.data();
-
     const entityRef = sharable.target;
     const entity = await entityRef.get();
 
@@ -56,9 +55,18 @@ export default async function handler(req, res) {
       return res.status(404).json({ message: 'Shared target not found' });
     }
 
+    // Filter the entity data based on sharedFields
+    const entityData = entity.data();
+    const filteredEntityData = sharable.sharedFields.reduce((acc, field) => {
+      if (field in entityData) {
+        acc[field] = entityData[field];
+      }
+      return acc;
+    }, {});
+
     const response = {
       ...convertTimestamps(sharable),
-      target: convertTimestamps(entity.data())
+      target: convertTimestamps(filteredEntityData)
     };
 
     return res.status(200).json(response);
