@@ -110,19 +110,27 @@ const EmpathyBackground = ({
 
   return (
     <>
-      {dominantSentiments.map((sentiment) => (
+      {dominantSentiments.map((sentiment, index) => (
         <React.Fragment key={sentiment.type}>
           <div
             style={{
               ...sentiment.baseStyle,
-              opacity: sentiment.baseOpacity * sentiment.percentage * 0.6,
+              opacity:
+                sentiment.baseOpacity *
+                sentiment.percentage *
+                0.6 *
+                (index === 0 ? 1.5 : 1),
               ...style,
             }}
           />
           <div
             style={{
               ...sentiment.highlightStyle,
-              opacity: sentiment.highlightOpacity * sentiment.percentage * 0.6,
+              opacity:
+                sentiment.highlightOpacity *
+                sentiment.percentage *
+                0.6 *
+                (index === 0 ? 1.5 : 1),
               ...style,
             }}
           />
